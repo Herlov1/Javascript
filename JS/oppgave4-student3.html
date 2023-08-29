@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - student 3</title>
+</head>
+<body>
+    <input type="button" value="Trykk her for å generere bilder og tekst" id="show-images-btn">
+    <div id="output-div"></div>
+    
+    <script>
+        
+        var outputDiv = document.getElementById("output-div");
+        var showImagesBtn = document.getElementById("show-images-btn");
+       
+        
+      var essentials = [
+        {
+          name: "Cookies",
+          image: "cookie.jpg",
+          info: "Chocolate chips cookies er de beste som finnes"
+        },
+        {
+          name: "Eple",
+          image: "apple.jpg",
+          info: "Epler er et sunt alternativ og virker bedre enn kaffe"
+        },
+        {
+          name: "Cat",
+          image: "cat.jpg",
+          info: "Katter har faktisk 9 liv scientific proved"
+        },
+      ];
+
+      var numberOfEssentials = essentials.length;
+
+      function displayCookies() {
+        for (let i = 0; i < numberOfEssentials; i++) {
+            console.log(essentials[i].name);
+            outputDiv.innerHTML += `
+            <article>
+            <h3> ${essentials[i].name}</h3>
+            <img src="images/${essentials[i].image}" />
+            <p> ${essentials[i].info}</p>
+            </article>`;
+            
+        }
+      }
+      showImagesBtn.onclick = displayCookies;
+    </script>
+</body>
+</html>

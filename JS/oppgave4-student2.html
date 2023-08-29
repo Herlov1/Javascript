@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - student 2</title>
+</head>
+<body>
+		<h3 id="bank-login" style="display: flex; justify-content: center"></h3>
+		<section id="buttons" style="display: flex; justify-content: center">
+			<input type="number" id="innskudd-txt" placeholder="Innskudd kr" />
+			<input type="number" id="ta-ut-txt" placeholder="Ta ut kr" />
+			<input type="text" id="ta-ut-kr" placeholder="Ta ut kr" />
+			<input type="text" id="ta-ut-nok" placeholder="Ta ut kr" />
+			<input type="text" id="ta-ut-sek" placeholder="Ta ut kr" />
+		</section>
+		<br/>
+		<section
+			id="container"
+			style="display: flex; justify-content: space-evenly">
+			<span id="innskudd">Brukskonto 0 kr</span>
+			<span id="ta-ut">Lønnskonto 0 kr</span>
+			<span id="balanse">Sparekonto 0 kr</span>
+		</section>
+
+		<script>
+			// Bank login funksjon
+			function bankLoginType() {
+				let tekst;
+				let bankType = prompt("Vennligst velg din type bank");
+				switch (bankType) {
+					case "sparekonto".toLowerCase():
+						text = "Sparekonto";
+						break;
+					case "brukskonto".toLowerCase():
+						text = "Brukskonto";
+						break;
+					case "lønnskonto".toLowerCase():
+						text = "Lønnskonto";
+						break;
+					default:
+						text = "Vennligst velg riktig konto";
+						bankLoginType();
+				}
+				document.getElementById("bank-login").innerHTML = text;
+			}
+			// Styling
+
+			function styleSpan() {
+				var nodes = document.getElementsByTagName("span");
+				for (var i = 0; i < nodes.length; i++) {
+					nodes[i].style.width = "200px";
+					nodes[i].style.border = "10px solid blue";
+					nodes[i].style.backgroundColor = "blue";
+					nodes[i].style.borderRadius = "5px";
+					nodes[i].style.color = "white";
+				}
+			}
+
+			// Eventer
+			// bankLoginType();
+			styleSpan();
+		</script>
+	</body>
+</html>

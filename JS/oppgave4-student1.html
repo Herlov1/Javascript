@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Oppgave 4: 1</title>
+		<link rel="stylesheet" href="css/oppgave2.css" type="text/css" />
+	</head>
+	<body>
+		<div id="menu-container">
+			<input id="move-left-btn" type="button" value="Venstre" />
+			<input id="move-up-btn" type="button" value="Opp" />
+			<input id="move-right-btn" type="button" value="Høyre" />
+			<input id="move-down-btn" type="button" value="Ned" />
+		</div>
+		<div id="game-container">
+			<p>Antall steg: <span id="number-of-steps-span">0</span></p>
+			<img id="miaow-miaow" src="images/miaow-miaow.png" alt="Bilde av en katt"/>
+			<img id="the-mighty-fish" src="images/fish.png" alt="Bilde av en fisk" />
+			<h2 id="fish-room-title">Fiskens rom</h2>
+			<div id="line-div"></div>
+			<div id="fish-food"></div>
+		</div>
+		<div id="dialogue-output-div">
+			<p>Miaow Miaow: <span id="miaow-miaow-says">...</span></p>
+			<p>Fisken: <span id="fish-says">...</span></p>
+		</div>
+
+		<script>
+			// Utvidelsen inneholder Matn.random, setInterval og do-while.
+			//variables
+			var moveRightBtn = document.getElementById("move-right-btn");
+			var moveLeftBtn = document.getElementById("move-left-btn");
+			var moveDownBtn = document.getElementById("move-down-btn");
+			var moveUpBtn = document.getElementById("move-up-btn");
+			var fishSays = document.getElementById("fish-says");
+			var miaowSays = document.getElementById("miaow-miaow-says");
+			var numberOfSteps = document.getElementById("number-of-steps-span");
+			var miaowMiaow = document.getElementById("miaow-miaow");
+			var mightyFish = document.getElementById("the-mighty-fish");
+			var container = document.getElementById("game-container");
+			var fishFood = document.getElementById("fish-food");
+			var numberOfStepsCount = 0;
+			var miaowMiaowWalk = 0;
+			var fishCounter = 0;
+
+			//Arrays
+			var miaowQuestionArray = [
+				"Går det bra med deg?",
+				"Så fint vær det er idag!",
+				"Vil du henge en dag?",
+				"Liker du meg?",
+				"Vil du være vennen min?",
+			];
+			var fishAnswerArray = [
+				"Nei!",
+				"Ellers takk!",
+				"Gå vekk!",
+				"Slutt å irriter meg",
+				"La meg være i fred!",
+			];
+
+			//functions
+			function stepCounter() {
+				numberOfStepsCount += 1;
+				numberOfSteps.innerHTML = `${numberOfStepsCount}`;
+			}
+			function moveRight() {
+				if (miaowMiaowWalk >= 700) {
+					miaowMiaowWalk += -700;
+					miaowMiaow.style.left = `${miaowMiaowWalk}px`;
+					fishSays.innerHTML = `TREKK TILBAKE! DETTE ER MITT ROM!`;
+				} else {
+					miaowMiaowWalk += 50;
+					miaowMiaow.style.left = `${miaowMiaowWalk}px`;
+					stepCounter();
+				}
+			}
+			function moveLeft() {
+				if (miaowMiaowWalk <= -50) {
+					miaowMiaowWalk += 50;
+					miaowMiaow.style.left = `${miaowMiaowWalk}px`;
+				} else {
+					miaowMiaowWalk -= 50;
+					miaowMiaow.style.left = `${miaowMiaowWalk}px`;
+					stepCounter();
+				}
+			}
+			function moveUp() {
+				if (miaowMiaowWalk <= -50) {
+					miaowMiaowWalk += 50;
+					miaowMiaow.style.top = `${miaowMiaowWalk}px`;
+				} else {
+					miaowMiaowWalk -= 50;
+					miaowMiaow.style.top = `${miaowMiaowWalk}px`;
+					stepCounter();
+				}
+			}
+			function moveDown() {
+				if (miaowMiaowWalk >= 550) {
+					miaowMiaowWalk += -50;
+					miaowMiaow.style.top = `${miaowMiaowWalk}px`;
+				} else {
+					numberOfSteps++;
+					miaowMiaowWalk += 50;
+					miaowMiaow.style.top = `${miaowMiaowWalk}px`;
+					stepCounter();
+				}
+			}
+			function spawnfishFood() {
+				fishFood.innerHTML += `<img src="./images/fish-food.png" onclick=removeImg() />`;
+				fishFood.style.top = randomPosition + "px";
+				fishFood.style.left = randomPosition + "px";
+				fishFood.style.position = "relative";
+			}
+			var randomPosition = Math.floor(Math.random() * 500);
+			var timer = Math.floor(Math.random() * 10000);
+
+			setInterval(spawnfishFood, timer);
+
+			function removeImg() {
+				fishFood.innerHTML = "";
+				fishSays.innerHTML = `Gi meg maten min!`;
+			}
+
+			function theyTalk() {
+				fishCounter += 1;
+				console.log(fishCounter);
+				if (fishCounter >= 3) {
+					do {
+						var eatMe = window.prompt("Hva slags mat liker du?");
+					} while ((eatMe.value = ""));
+					miaowSays.innerHTML = `${eatMe}`;
+					fishSays.innerHTML = `Jeg elsker ${eatMe} også!`;
+				} else if (miaowMiaowWalk >= 600) {
+					miaowSays.innerHTML =
+						miaowQuestionArray[
+							Math.floor(Math.random() * miaowQuestionArray.length)
+						];
+					fishSays.innerHTML =
+						fishAnswerArray[Math.floor(Math.random() * fishAnswerArray.length)];
+				} else {
+					miaowSays.innerHTML = "Hallo?";
+					fishSays.innerHTML = `Jeg kan ikke høre deg!`;
+				}
+			}
+
+			//events
+			fishFood.onclick = removeImg;
+			moveRightBtn.onclick = moveRight;
+			moveLeftBtn.onclick = moveLeft;
+			moveUpBtn.onclick = moveUp;
+			moveDownBtn.onclick = moveDown;
+			mightyFish.onclick = theyTalk;
+		</script>
+	</body>
+</html>
